@@ -51,7 +51,8 @@ unsigned long get_ttbr1(void)
 void map_kernel_space(vaddr_t va, paddr_t pa, size_t len)
 {
 	// <lab2>
-
+	vaddr_t *pgtbl = (vaddr_t *)get_ttbr1();
+	map_range_in_pgtbl(pgtbl, va, pa, len, KERNEL_PT);
 	// </lab2>
 }
 
@@ -98,5 +99,5 @@ void mm_init(void)
 
 	map_kernel_space(KBASE + (128UL << 21), 128UL << 21, 128UL << 21);
 	//check whether kernel space [KABSE + 256 : KBASE + 512] is mapped 
-	kernel_space_check();
+	// kernel_space_check();
 }
