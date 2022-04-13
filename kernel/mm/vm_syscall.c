@@ -319,7 +319,6 @@ u64 sys_handle_brk(u64 addr)
 	struct vmspace *vmspace;
 	struct pmobject *pmo;
 	struct vmregion *vmr;
-	size_t len;
 	u64 retval;
 
 	vmspace = obj_get(current_process, VMSPACE_OBJ_ID, TYPE_VMSPACE);
