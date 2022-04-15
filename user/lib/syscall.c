@@ -13,38 +13,58 @@ u64 syscall(u64 sys_no, u64 arg0, u64 arg1, u64 arg2, u64 arg3, u64 arg4,
 	 * And finally use svc to execute the system call. After syscall returned, don't forget
 	 * to move return value from x0 to the ret variable of this function
 	 */
-	// asm volatile(
-	// 	"mov x0, %1\n"
-	// 	"mov x1, %2\n"
-	// 	"mov x2, %3\n"
-	// 	"mov x3, %4\n"
-	// 	"mov x4, %5\n"
-	// 	"mov x5, %6\n"
-	// 	"mov x6, %7\n"
-	// 	"mov x7, %8\n"
-	// 	"mov x8, %9\n"
-	// 	"svc #0\n"
-	// 	"mov %0, x0\n"
-	// 	:"=r"(ret)
-	// 	:"r"(arg0), "r"(arg1), "r"(arg2), "r"(arg3), "r"(arg4), 
-	// 	"r"(arg5), "r"(arg6), "r"(arg7), "r"(arg8), "r"(sys_no)
-	// 	:"x0", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8"
-	// );
-	asm volatile ("mov x8, %1\n"
-				"mov x0, %2\n"
-				"mov x1, %3\n"
-				"mov x2, %4\n"
-				"mov x3, %5\n"
-				"mov x4, %6\n"
-				"mov x5, %7\n"
-				"mov x6, %8\n"
-				"svc #0\n"
-				"mov %0, x0\n"
-				:"=r" (ret)
-				:"r"(sys_no), "r"(arg0), "r"(arg1), "r"(arg2), "r"(arg3), "r"(arg4), "r"(arg5),
-				"r"(arg6), "r"(arg7), "r"(arg8)
-				:"x0", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8"
+	asm volatile(
+		"mov x0, %[a0]\n"
+		"mov x1, %[a1]\n"
+		"mov x2, %[a2]\n"
+		"mov x3, %[a3]\n"
+		"mov x4, %[a4]\n"
+		"mov x5, %[a5]\n"
+		"mov x6, %[a6]\n"
+		"mov x7, %[a7]\n"
+		"mov x8, %[no]\n"
+		"svc #0\n"
+		"mov %0, x0\n"
+		:"=r"(ret)
+		:[a0]"r"(arg0), [a1]"r"(arg1), [a2]"r"(arg2), [a3]"r"(arg3), [a4]"r"(arg4), 
+		[a5]"r"(arg5), [a6]"r"(arg6), [a7]"r"(arg7), [a8]"r"(arg8), [no]"r"(sys_no)
+		:"x0", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8"
 	);
+
+	// asm volatile ("mov x8, %1\n"
+	// 			"mov x0, %2\n"
+	// 			"mov x1, %3\n"
+	// 			"mov x2, %4\n"
+	// 			"mov x3, %5\n"
+	// 			"mov x4, %6\n"
+	// 			"mov x5, %7\n"
+	// 			"mov x6, %8\n"
+	// 			"mov x7, %9\n"
+	// 			"svc #0\n"
+	// 			"mov %0, x0\n"
+	// 			:"=r" (ret)
+	// 			:"r"(sys_no), "r"(arg0), "r"(arg1), "r"(arg2), "r"(arg3), "r"(arg4), "r"(arg5),
+	// 			"r"(arg6), "r"(arg7), "r"(arg8)
+	// 			:"x0", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8"
+	// );
+
+	// asm volatile(
+	// 		"mov x0, %1\n"
+	// 		"mov x1, %2\n"
+	// 		"mov x2, %3\n"
+	// 		"mov x3, %4\n"
+	// 		"mov x4, %5\n"
+	// 		"mov x5, %6\n"
+	// 		"mov x6, %7\n"
+	// 		"mov x7, %8\n"
+	// 		"mov x8, %9\n"
+	// 		"svc #0\n"
+	// 		"mov %0, x0\n"
+	// 		:"=r"(ret)
+	// 		:"r"(arg0), "r"(arg1), "r"(arg2), "r"(arg3), "r"(arg4), 
+	// 		"r"(arg5), "r"(arg6), "r"(arg7), "r"(sys_no)
+	// 		:"x0", "x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8"
+	// );
 
 	return ret;
 }

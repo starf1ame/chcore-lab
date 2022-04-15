@@ -31,8 +31,6 @@ static inline vaddr_t get_fault_addr()
 	return addr;
 }
 
-int handle_trans_fault(struct vmspace *vmspace, vaddr_t fault_addr);
-
 void do_page_fault(u64 esr, u64 fault_ins_addr)
 {
 	vaddr_t fault_addr;
